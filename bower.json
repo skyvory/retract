@@ -1,0 +1,30 @@
+{
+  "name": "retract",
+  "homepage": "https://github.com/skyvory/retract",
+  "authors": [
+    "Skyvory <skyvory@hotmail.com>"
+  ],
+  "description": "twitter front-end web client",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "twitter"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "angularjs#~1.4.7",
+    "angular-ui-router": "~0.2.15",
+    "ng-twitter-api": "~0.1.5",
+    "oauth-js": "oauthio-web#~0.4.4",
+    "angular-sanitize": "~1.4.7",
+    "jquery": "~2.1.4"
+  }
+}
