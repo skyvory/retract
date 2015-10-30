@@ -5,10 +5,11 @@
 		.module('retractionApp')
 		.controller('AuthController', AuthController);
 
-	function AuthController($state, $scope) {
+	function AuthController($auth, $state, $scope) {
 
-
+		$scope.authenticate = function(provider) {
+			$auth.authenticate(provider);
+		}
 		
-
 	}
 })();

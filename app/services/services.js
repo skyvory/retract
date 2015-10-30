@@ -42,6 +42,7 @@ angular.module('retractionApp.services', [])
 				if(maxId) {
 					url += '?max_id=' + maxId;
 				}
+				// console.log("XXX",  authorizationResult);
 				var promise = authorizationResult.get(url).done(function(data) {
 					// https://dev.twitter.com/docs/api/1.1/get/statuses/home_timeline
 					// when the data is retrieced resolve the deferred object
@@ -50,6 +51,32 @@ angular.module('retractionApp.services', [])
 					deferred.reject(err);
 				});
 				// return the promise of the deferred object
+				return deferred.promise;
+			},
+
+			getMentions: function() {
+				var deferred = $q.defer();
+				var url = '/1.1/statuses/mentions_timeline.json';
+				var promise = authorizationResult.get(url).done(function(data) {
+					deferred.resolve(data);
+				}).fail(function(err) {
+					deferred.reject(err);
+				});
+				return deferred.promise;
+			},
+			postStatus: function(status) {
+				var deferred = $q.defer();
+				var url = '/1.1/statuses/update.json';
+				var params = {
+					data: {
+						status: status,
+					}
+				};
+				var promise = authorizationResult.post(url, params).done(function(data) {
+					deferred.resolve(data);
+				}).fail(function(err) {
+					deferred.reject(err);
+				});
 				return deferred.promise;
 			}
 		}

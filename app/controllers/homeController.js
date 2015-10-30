@@ -6,14 +6,31 @@
 		.controller('HomeController', function($scope, $q, twitterService) {
 
 			$scope.tweets = [];
+			$scope.newtweet = '';
 			twitterService.initialize();
 
 			//using the OAuth authorization result get the latest 20 tweets from twitter for the user
 			$scope.refreshTimeline = function(maxId) {
 				twitterService.getLatestTweets(maxId).then(function(data) {
-					console.log(data);
+					// console.log(data);
 					$scope.tweets = $scope.tweets.concat(data);
 				},function() {
+					$scope.rateLimitError = true;
+				});
+			}
+
+			$scope.getMentions = function() {
+				twitterService.getMentions().then(function(data) {
+					$scope.tweets = $scope.tweets.concat(data);
+				}, function() {
+					$scope.rateLimitError = true;
+				});
+			}
+
+			$scope.tweet = function() {
+				twitterService.postStatus($scope.newtweet).then(function(data) {
+					$scope.stat = data;
+				}, function() {
 					$scope.rateLimitError = true;
 				});
 			}
@@ -52,7 +69,8 @@
 				$('#connectButton').hide();
 				$('#getTimelineButton, #signOut').show();
 				$scope.connectedTwitter = true;
-				//$scope.refreshTimeline();
+				$scope.refreshTimeline();
+				// $scope.getMentions();
 			}
 		});
 })();

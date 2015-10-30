@@ -1,8 +1,13 @@
+
 <button ng-click="connectButton()" id="connectButton" type="button">Connect twitter</button>
 <button ng-click="refreshTimeline()" id="getTimelineButton" type="button" style="display:none">Get Timeline</button>
 <button ng-click="signOut()" id="signOut" type="button" style="display:none;">signout</button>
 
 <input type="text" ng-model="searchTerm" id="searchBox" ng-show="connectedTwitter">
+
+
+<input type="text" id="n" ng-model="newtweet" ng-show="connectedTwitter">
+<button ng-click="tweet()">tweet</button>
 
 <div id="results">
 	<div ng-repeat="t in tweets | filter:searchTerm">
