@@ -35,16 +35,53 @@
 				return str;
 			}
 
+			function stripslashes(str) {
+				str = str.replace(/\\'/g, '\'');
+				str = str.replace(/\\"/g, '"');
+				str = str.replace(/\\0/g, '\0');
+				str = str.replace(/\\\\/g, '\\');
+				return str;
+			}
+
 			$scope.tweet = function() {
-				twitterService.postStatus($scope.newtweet).then(function(data) {
+				var newtweet = $scope.newtweet;
+				twitterService.postStatus(newtweet).then(function(data) {
 					// prepare empty array
 					var xxx = [];
 					// push new tweet object to empty array
 					xxx.push(data);
 					// merge (append) existing tweet cluster to new tweet array
 					$scope.tweets = xxx.concat($scope.tweets);
+					// clear input
+					$scope.newtweet = '';
 				}, function() {
 					$scope.rateLimitError = true;
+				});
+			}
+
+			$scope.stepsModel = [];
+			$scope.upload = function(event) {
+				var files = event.target.files;
+				// console.log(files);
+				for (var i = 0; i < files.length; i++) {
+					var file = files[i];
+					var reader = new FileReader();
+					reader.onload = $scope.imageIsLoaded;
+					reader.readAsDataURL(file);
+				}
+			}
+
+			$scope.imageIsLoaded = function(e) {
+				$scope.$apply(function() {
+					$scope.stepsModel.push(e.target.result);
+					// do send to twitter after process
+					var gazou = e.target.result;
+					// console.log(gazou);
+					twitterService.postImage(gazou).then(function(data) {
+						console.log(data);
+					}, function() {
+						$scope.rateLimitError = true;
+					});
 				});
 			}
 
@@ -54,7 +91,7 @@
 					if(twitterService.isReady()) {
 						// if authorization is successful, hide the connect button and display the tweet
 						$('#connectButton').fadeOut(function() {
-							$('#getTimelineButton, #signOut').fadeIn();
+							$('#container').fadeIn();
 							$scope.refreshTimeline();
 							$scope.connectedTwitter = true;
 						});

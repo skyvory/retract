@@ -7,11 +7,19 @@
 
 	<input type="text" ng-model="searchTerm" id="searchBox" ng-show="connectedTwitter">
 
+
 	<br/>
 	<br/>
-	
-	<input type="text" id="n" ng-model="newtweet">
+
+	<textarea ng-model="newtweet"></textarea>
+	<!-- <input type="text" id="n" ng-model="newtweet"> -->
 	<button ng-click="tweet()">tweet</button>
+
+	<br/>
+	<br/>
+
+	<input type="file" name="image" ng-model-instant onchange="angular.element(this).scope().upload(event)" multiple />
+	<!-- <button ng-click="upload()">upload</button> -->
 
 	<div id="results">
 		<div ng-repeat="t in tweets | filter:searchTerm">

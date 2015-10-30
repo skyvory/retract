@@ -78,6 +78,20 @@ angular.module('retractionApp.services', [])
 					deferred.reject(err);
 				});
 				return deferred.promise;
+			},
+			postImage: function(gazou) {
+				var deferred = $q.defer(); var url = '/1.1/media/upload.json';
+				var params = {
+					data: {
+						media_data: gazou,
+					}
+				};
+				var promise = authorizationResult.post(url, params).done(function(data) {
+					deferred.resolve(data);
+				}).fail(function(err) {
+					deferred.reject(err);
+				});
+				return deferred.promise;
 			}
 		}
 	});
