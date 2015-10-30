@@ -1,25 +1,30 @@
 
 <button ng-click="connectButton()" id="connectButton" type="button">Connect twitter</button>
-<button ng-click="refreshTimeline()" id="getTimelineButton" type="button" style="display:none">Get Timeline</button>
-<button ng-click="signOut()" id="signOut" type="button" style="display:none;">signout</button>
 
-<input type="text" ng-model="searchTerm" id="searchBox" ng-show="connectedTwitter">
+<div id="container" style="display:none">
+	<button ng-click="refreshTimeline()" id="getTimelineButton" type="button">Get Timeline</button>
+	<button ng-click="signOut()" id="signOut" type="button">signout</button>
 
+	<input type="text" ng-model="searchTerm" id="searchBox" ng-show="connectedTwitter">
 
-<input type="text" id="n" ng-model="newtweet" ng-show="connectedTwitter">
-<button ng-click="tweet()">tweet</button>
+	<br/>
+	<br/>
+	
+	<input type="text" id="n" ng-model="newtweet">
+	<button ng-click="tweet()">tweet</button>
 
-<div id="results">
-	<div ng-repeat="t in tweets | filter:searchTerm">
-		<img ng-ssrc="{{t.user.profile_image_url}}">
-		<small>{{t.user.name}}</small>
-		<br>
-		<span ng-bind-html="t.text"></span>
+	<div id="results">
+		<div ng-repeat="t in tweets | filter:searchTerm">
+			<img ng-ssrc="{{t.user.profile_image_url}}">
+			<small>{{t.user.name}}</small>
+			<br>
+			<span ng-bind-html="t.text"></span>
+		</div>
+
+		<div ng-show="rateLimitError">
+		rate error
+		</div>
+
+		<input type="button" id="load-more" ng-click="refreshTimeline(tweets[tweets.length-1].id)" ng-show="connectedTwitter" value="load more">
 	</div>
-
-	<div ng-show="rateLimitError">
-	rate error
-	</div>
-
-	<input type="button" id="load-more" ng-click="refreshTimeline(tweets[tweets.length-1].id)" ng-show="connectedTwitter" value="load more">
 </div>

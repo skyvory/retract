@@ -80,7 +80,7 @@
 			// if the user is a returning user, hide the sign in button and display the tweets
 			if(twitterService.isReady()) {
 				$('#connectButton').hide();
-				$('#getTimelineButton, #signOut').show();
+				$('#container').show();
 				$scope.connectedTwitter = true;
 				$scope.refreshTimeline();
 				// $scope.getMentions();
