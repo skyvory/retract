@@ -12,7 +12,7 @@
 			//using the OAuth authorization result get the latest 20 tweets from twitter for the user
 			$scope.refreshTimeline = function(maxId) {
 				twitterService.getLatestTweets(maxId).then(function(data) {
-					// console.log(data);
+					// console.log('data', data);
 					$scope.tweets = $scope.tweets.concat(data);
 				},function() {
 					$scope.rateLimitError = true;
@@ -27,9 +27,22 @@
 				});
 			}
 
+			function addslashes(str) {
+				str = str.replace(/\\/g, '\\\\');
+				str = str.replace(/\'/g, '\\\'');
+				str = str.replace(/\"/g, '\\"');
+				str = str.replace(/\0/g, '\\0');
+				return str;
+			}
+
 			$scope.tweet = function() {
 				twitterService.postStatus($scope.newtweet).then(function(data) {
-					$scope.stat = data;
+					// prepare empty array
+					var xxx = [];
+					// push new tweet object to empty array
+					xxx.push(data);
+					// merge (append) existing tweet cluster to new tweet array
+					$scope.tweets = xxx.concat($scope.tweets);
 				}, function() {
 					$scope.rateLimitError = true;
 				});
