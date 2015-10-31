@@ -65,6 +65,7 @@
 				// console.log(files);
 				for (var i = 0; i < files.length; i++) {
 					var file = files[i];
+					// use FileReader html API
 					var reader = new FileReader();
 					reader.onload = $scope.imageIsLoaded;
 					reader.readAsDataURL(file);
@@ -76,9 +77,24 @@
 					$scope.stepsModel.push(e.target.result);
 					// do send to twitter after process
 					var gazou = e.target.result;
-					// console.log(gazou);
-					twitterService.postImage(gazou).then(function(data) {
-						console.log(data);
+					// get only the encoded base664 content part
+					gazou = gazou.split(',')[1];
+					// console.log(e.target.result);
+					twitterService.postImage(gazou).then(function(imagedata) {
+						console.log(imagedata);
+						// update status if media upload success
+						var newtweet = $scope.newtweet;
+						twitterService.postStatusWithMedia(newtweet, imagedata.media_id_string).then(function(data) {
+							var xxx = [];
+							xxx.push(data);
+							$scope.tweets = xxx.concat($scope.tweets);
+							$scope.newtweet = '';
+						}, function() {
+							$scope.rateLimitError = true;
+						});
+						// clear input file value
+						// document.getElementById("newimage").value = "";
+
 					}, function() {
 						$scope.rateLimitError = true;
 					});

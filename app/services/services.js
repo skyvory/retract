@@ -80,12 +80,31 @@ angular.module('retractionApp.services', [])
 				return deferred.promise;
 			},
 			postImage: function(gazou) {
-				var deferred = $q.defer(); var url = '/1.1/media/upload.json';
+				var deferred = $q.defer(); var url = 'https://upload.twitter.com/1.1/media/upload.json';
 				var params = {
 					data: {
 						media_data: gazou,
 					}
 				};
+				var promise = authorizationResult.post(url, params).done(function(data) {
+					deferred.resolve(data);
+				}).fail(function(err) {
+					deferred.reject(err);
+				});
+				return deferred.promise;
+			},
+			postStatusWithMedia: function(status, media) {
+				var deferred = $q.defer();
+				var url = '/1.1/statuses/update.json';
+				var params = {
+					data: {
+						status: status,
+						media_ids: [
+							media
+						]
+					}
+				};
+				// console.log(params.data.media_ids);
 				var promise = authorizationResult.post(url, params).done(function(data) {
 					deferred.resolve(data);
 				}).fail(function(err) {
