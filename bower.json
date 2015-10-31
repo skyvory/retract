@@ -25,6 +25,8 @@
     "ng-twitter-api": "~0.1.5",
     "oauth-js": "oauthio-web#~0.4.4",
     "angular-sanitize": "~1.4.7",
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "angular-local-storage": "~0.2.3",
+    "angular-cookies": "~1.4.7"
   }
 }
