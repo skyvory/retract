@@ -122,7 +122,7 @@
 			$scope.signOut = function() {
 				twitterService.clearCache();
 				$scope.tweets.length = 0;
-				$('#getTimelineButton, #signOut').fadeOut(function() {
+				$('#container').fadeOut(function() {
 					$('#connectButton').fadeIn();
 					$scope.$apply(function() {
 						$scope.connectedTwitter = false
@@ -137,6 +137,9 @@
 				$scope.connectedTwitter = true;
 				$scope.refreshTimeline();
 				// $scope.getMentions();
+			}
+			else {
+				// $scope.connectButton();
 			}
 		});
 })();
