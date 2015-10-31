@@ -2,9 +2,9 @@
 
 var app = angular.module('retractionApp', [
 	'ui.router',
-	'ngSanitize',
-	'ngTwitter',
+	// 'ngTwitter',
 	'retractionApp.services',
+	'ngSanitize',
 ]);
 
 // $twitterApi.configure(clientId, )
