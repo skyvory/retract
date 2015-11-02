@@ -135,7 +135,7 @@
 				$('#connectButton').hide();
 				$('#container').show();
 				$scope.connectedTwitter = true;
-				$scope.refreshTimeline();
+				// $scope.refreshTimeline();
 				// $scope.getMentions();
 			}
 			else {
