@@ -108,7 +108,7 @@
 						// if authorization is successful, hide the connect button and display the tweet
 						$('#connectButton').fadeOut(function() {
 							$('#container').fadeIn();
-							$scope.refreshTimeline();
+							// $scope.refreshTimeline();
 							$scope.connectedTwitter = true;
 						});
 					}
