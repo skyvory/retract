@@ -11,6 +11,9 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 
 session_start();
 
+define('CONSUMER_KEY', 'vi89NrRgmNdryV4jJtkaxgW0m');
+define('CONSUMER_SECRET', 'vLo9zzpLXSodZls3upKmxRhG6AawNRHqXe18SizCZ28nqxN2oo');
+
 class HomeController extends Controller
 {
 	/**
@@ -21,7 +24,7 @@ class HomeController extends Controller
 	public function index()
 	{
 		// build TwitterOAuth object with client credentials
-		$connection = new TwitterOAuth('vi89NrRgmNdryV4jJtkaxgW0m', 'vLo9zzpLXSodZls3upKmxRhG6AawNRHqXe18SizCZ28nqxN2oo');
+		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
 		// get temporary credentials, request twitter oauth token
 		$request_token = $connection->oauth('oauth/request_token', array('oauth_callback' => ''));
 		// if last connection failed don't display authorization link
@@ -55,7 +58,7 @@ class HomeController extends Controller
 		$request_token['oauth_token_secret'] = $_SESSION['oauth_token_secret'];
 
 		// create TwitterOAuth object with app key/secret and token key/secret from default phase
-		$connection = new TwitterOAuth('vi89NrRgmNdryV4jJtkaxgW0m', 'vLo9zzpLXSodZls3upKmxRhG6AawNRHqXe18SizCZ28nqxN2oo', $request_token['oauth_token'], $request_token['oauth_token_secret']);
+		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $request_token['oauth_token'], $request_token['oauth_token_secret']);
 
 		// request access token from twitter
 		$access_token = $connection->oauth("oauth/access_token", array("oauth_verifier" => $oauth_verifier));
@@ -66,7 +69,11 @@ class HomeController extends Controller
 	}
 	public function home(Request $request) {
 		$access_token = $_SESSION['access_token'];
-		var_dump($access_token);
+		$access_token_secret = $_SESSION['access_token_secret'];
+		// create twitteroauth object with access token
+		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
+		$content = $connection->get('account/verify_credentials');
+		var_dump($content);
 	}
 
 	/**
