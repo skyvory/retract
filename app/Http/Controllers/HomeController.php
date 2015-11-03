@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 
+use Illuminate\Http\Response;
+
 session_start();
 
 define('CONSUMER_KEY', 'vi89NrRgmNdryV4jJtkaxgW0m');
@@ -73,7 +75,8 @@ class HomeController extends Controller
 		// create twitteroauth object with access token
 		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
 		$content = $connection->get('account/verify_credentials');
-		return view('home', ['user' => $content]);
+		// return view('home', ['user' => $content]);
+		return response()->json('content' => $content);
 	}
 
 	/**
