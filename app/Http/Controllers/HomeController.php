@@ -36,7 +36,7 @@ class HomeController extends Controller
 				// save temporary credential to session
 				$_SESSION['oauth_token'] = $request_token['oauth_token'];
 				$_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
-				var_dump($_SESSION['oauth_token']);
+				// var_dump($_SESSION['oauth_token']);
 
 				// build authorize URL and redirect use to Twitter
 				$url = $connection->url('oauth/authorize', array('oauth_token' => $request_token['oauth_token']));
@@ -46,11 +46,14 @@ class HomeController extends Controller
 			// show notification if something went wrong
 			echo 'Could not connect to Twitter. Refresh the page or try again later.';
 		}
-		echo '<a href="' . $url . '">aaa</a>';
+		echo '<a href="' . $url . '">Authenticate</a>';
 		// $content = $connection->get("account/verify_credentials");
 		// $request_token = $connection->getRequestToken('http://localhost/retract/public/');
-		var_dump($request_token);
+		// var_dump($request_token);
 		// return view('home');
+
+		// redirect automatically to twitter's authentication page
+		return redirect($url);
 	}
 	public function returning(Request $request) {
 		$oauth_verifier = $request->input('oauth_verifier');
@@ -67,16 +70,21 @@ class HomeController extends Controller
 		$_SESSION['access_token'] = $access_token['oauth_token'];
 		$_SESSION['access_token_secret'] = $access_token['oauth_token_secret'];
 		var_dump($access_token);
-		return redirect()->action('HomeController@home');
+		// return redirect()->action('HomeController@home');
+
+		// set url directing to public directory
+		$path = url('/');
+		// redirect to front-end
+		return redirect($path . '/front.html');
 	}
-	public function home(Request $request) {
+	public function home() {
 		$access_token = $_SESSION['access_token'];
 		$access_token_secret = $_SESSION['access_token_secret'];
 		// create twitteroauth object with access token
 		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
 		$content = $connection->get('account/verify_credentials');
 		// return view('home', ['user' => $content]);
-		return response()->json('content' => $content);
+		return response()->json(['content' => $content]);
 	}
 
 	/**
