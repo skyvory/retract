@@ -16,3 +16,5 @@
 // });
 
 Route::get('/', 'HomeController@index');
+Route::get('/returning', 'HomeController@returning');
+Route::get('/home', 'HomeController@home');
