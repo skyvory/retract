@@ -73,7 +73,7 @@ class HomeController extends Controller
 		// create twitteroauth object with access token
 		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
 		$content = $connection->get('account/verify_credentials');
-		var_dump($content);
+		return view('home', ['user' => $content]);
 	}
 
 	/**

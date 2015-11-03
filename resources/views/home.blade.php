@@ -4,6 +4,8 @@
 	<title>Retraction Back End</title>
 </head>
 <body>
-xx
+	<?= $user->name ?>
+	<br />
+	<?php var_dump($user); ?>
 </body>
 </html>
