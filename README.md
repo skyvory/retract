@@ -12,3 +12,7 @@ Developed using:
 - angularjs
 - jquery
 - oauth.io
+
+Installation:
+- composer install on root directory
+- bower install on public directory
