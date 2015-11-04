@@ -13,7 +13,7 @@ var app = angular.module('retractionApp', [
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
 	// redirect to the auth state if any other states are requested other than users
-	$urlRouterProvider.otherwise('/home');
+	$urlRouterProvider.otherwise('/tweet');
 
 	$stateProvider
 		// .state('auth', {
@@ -29,6 +29,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			url: '/home',
 			templateUrl: 'views/homeView.html',
 			controller: 'HomeController as home',
+			parent: 'common',
+		})
+		.state('tweet', {
+			url: '/tweet',
+			templateUrl: 'views/tweetView.html',
+			controller: 'TweetController as tweet',
 			parent: 'common',
 		})
 		// .state('logout', {

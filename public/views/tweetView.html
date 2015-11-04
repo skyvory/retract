@@ -1,0 +1,16 @@
+<input type="text" ng-model="searchquery">
+
+{{user.data.content.name}}
+
+<textarea ng-model="newtweet"></textarea>
+<button ng-click="tweet()">Tweet</button>
+<br/>
+
+<div id="results">
+	<div ng-repeat="t in tweets | filter: searchquery">
+		<img ng-src="{{t.user.profile_image_url}}">
+		<small>{{t.user.name}}</small>
+		<span ng-bind-html="t.text"></span>
+		<br />
+	</div>
+</div>

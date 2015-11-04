@@ -86,6 +86,13 @@ class HomeController extends Controller
 		// return view('home', ['user' => $content]);
 		return response()->json(['content' => $content]);
 	}
+	public function postTweet(Request $request) {
+		$access_token = $_SESSION['access_token'];
+		$access_token_secret = $_SESSION['access_token_secret'];
+		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
+		$exec = $connection()->post('statuses/update', array('status' => $request->input('status')));
+		return response()->json(['content' => $exec]);
+	}
 
 	/**
 	 * Show the form for creating a new resource.
