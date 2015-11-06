@@ -93,6 +93,10 @@ class HomeController extends Controller
 		$exec = $connection->post('statuses/update', array('status' => $request->input('status')));
 		return response()->json($exec);
 	}
+	public function postTweetWithMedia(Request $request) {
+		$file = \Input::file('file');
+		return $file;
+	}
 
 	/**
 	 * Show the form for creating a new resource.

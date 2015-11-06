@@ -27,6 +27,7 @@
     "angular-sanitize": "~1.4.7",
     "jquery": "~2.1.4",
     "angular-local-storage": "~0.2.3",
-    "angular-cookies": "~1.4.7"
+    "angular-cookies": "~1.4.7",
+    "ng-file-upload": "~9.1.2"
   }
 }

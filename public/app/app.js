@@ -6,6 +6,7 @@ var app = angular.module('retractionApp', [
 	'retractionApp.services',
 	'ngSanitize',
 	// 'LocalStorageModule',
+	'ngFileUpload',
 ]);
 
 // $twitterApi.configure(clientId, )
