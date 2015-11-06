@@ -34,7 +34,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		.state('tweet', {
 			url: '/tweet',
 			templateUrl: 'views/tweetView.html',
-			controller: 'TweetController as tweet',
+			controller: 'TweetController',
 			parent: 'common',
 		})
 		// .state('logout', {

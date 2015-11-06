@@ -3,7 +3,7 @@
 
 	angular
 		.module('retractionApp')
-		.controller('TweetController', function($scope, $http) {
+		.controller('TweetController', function($scope, $http, $q) {
 			$scope.tweets = [];
 			$scope.newtweet = '';
 			$scope.user = '';
@@ -18,9 +18,9 @@
 					//
 				}
 			}
+
 			$scope.tweet = function() {
 				var newtweet = $scope.newtweet;
-				console.log(newtweet);
 				$http({
 					method: 'POST',
 					url: 'postTweet',
@@ -29,7 +29,7 @@
 					}
 				}).then(function successCallback(response) {
 					var xxx = [];
-					xxx.push(response);
+					xxx.push(response.data);
 					$scope.tweets = xxx.concat($scope.tweets);
 					$scope.newtweet = '';
 				}), function errorCallback(response) {
