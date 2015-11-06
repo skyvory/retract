@@ -90,8 +90,8 @@ class HomeController extends Controller
 		$access_token = $_SESSION['access_token'];
 		$access_token_secret = $_SESSION['access_token_secret'];
 		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
-		$exec = $connection()->post('statuses/update', array('status' => $request->input('status')));
-		return response()->json(['content' => $exec]);
+		$exec = $connection->post('statuses/update', array('status' => $request->input('status')));
+		return response()->json($exec);
 	}
 
 	/**
