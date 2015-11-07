@@ -37,7 +37,27 @@
 				}
 			}
 
-			// $scope.doUpload = function(file) {}
+			$scope.doUpload = function(file, sequence, callback) {
+				Upload.upload({
+					url: 'postMedia',
+					method: 'POST',
+					file: file,
+					sendFieldsAs: 'form',
+					fields: {},
+				})
+				.then(function (resp) {
+					var result = [];
+					result.media = resp.data.media_id_string;
+					result.sequence = sequence;
+					return callback(result);
+				}, function (resp) {
+					console.log("ERROR", resp.status);
+					return false;
+				}, function (evt) {
+					var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+					console.log('PORGRESS', progressPercentage);
+				});
+			}
 
 			$scope.upload = function(files) {
 				if(files && files.length && files.length <= 4) {
@@ -45,6 +65,10 @@
 					var greencount = 0;
 					var allgreen = true;
 					for(var i = 0; i < files.length; i++) {
+						$scope.doUpload(files[i], i, function(callresponse) {
+							// check for files length and fire tweet post if complete
+						})
+
 						Upload.upload({
 							url: 'postMedia',
 							method: 'POST',
