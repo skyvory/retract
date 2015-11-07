@@ -93,18 +93,30 @@ class HomeController extends Controller
 		$exec = $connection->post('statuses/update', array('status' => $request->input('status')));
 		return response()->json($exec);
 	}
-	public function postTweetWithMedia(Request $request) {
+	public function postMedia(Request $request) {
 		// $file = \Input::file('file');
 		// return $file;
 		$filename = $_FILES['file']['name'];
 		$tmp = $_FILES['file']['tmp_name'];
+		// return $tmp;
 		$access_token = $_SESSION['access_token'];
 		$access_token_secret = $_SESSION['access_token_secret'];
 		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
 		$media = $connection->upload('media/upload', array('media' => $tmp));
+
 		// $dest = '../resources/assets/' . $filename;
 		// move_uploaded_file($tmp, $dest);
+
 		return var_dump($media);
+	}
+	public function postTweetWithMedia(Request $request) {
+		$access_token = $_SESSION['access_token'];
+		$access_token_secret = $_SESSION['access_token_secret'];
+		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
+		// $exec = $connection->post('statuses/update', array('status' => $request->input('status')));
+		// return response()->json($exec);
+		$media = $request->input('media');
+		return $media;
 	}
 
 	/**
