@@ -3,7 +3,7 @@
 
 	angular
 		.module('retractionApp')
-		.controller('TweetController', function($scope, $http, $upload) {
+		.controller('TweetController', function($scope, $http, Upload) {
 			$scope.tweets = [];
 			$scope.newtweet = '';
 			$scope.user = '';
@@ -37,29 +37,28 @@
 				}
 			}
 
-			$scope.upload = function(files) {
-				if(files && file.length) {
-					for(var i = files.length-1; i>=0; i++) {
-						var file = files[i];
-						$upload.upload({
-							url: 'postTweetWithMedia',
-							fields: {
-								key: 'value'
-							},
-							file: file
-						})
-						.progress(function (evt) {
-							var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-							console.log('File upload ' + progressPercentage + '%');
-						})
-						.success(function(data, status, headers, config) {
-							console.log(data);
-						})
-						.error(function(data, status, headers, config) {
-							console.log(data);
-						});
+			$scope.upload = function(file) {
+				Upload.upload({
+					url: 'postTweetWithMedia',
+					// data: {
+					// 	file: file,
+					// 	'key': 'val',
+					// }
+					method: 'POST',
+					file: file,
+					sendFieldsAs: 'form',
+					fields: {
+						key: 'val',
 					}
-				}
+				})
+				.then(function (resp) {
+					console.log(resp.data);
+				}, function (resp) {
+					console.log("Error", resp.status);
+				}, function (evt) {
+					var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+					console.log('progress: ' + progressPercentage + '%');
+				});
 			};
 
 			$scope.verifyUser();
