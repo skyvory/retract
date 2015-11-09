@@ -86,20 +86,22 @@ class HomeController extends Controller
 		// redirect to front-end
 		return redirect($path . '/front.html');
 	}
-	public function home() {
+	public function connect() {
 		$access_token = $_SESSION['access_token'];
 		$access_token_secret = $_SESSION['access_token_secret'];
 		// create twitteroauth object with access token
 		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
 		$connection->setTimeouts(10, 15);
+		return $connection;
+	}
+	public function home() {
+		$connection = $this->connect();
 		$content = $connection->get('account/verify_credentials');
 		// return view('home', ['user' => $content]);
 		return response()->json(['content' => $content]);
 	}
 	public function postTweet(Request $request) {
-		$access_token = $_SESSION['access_token'];
-		$access_token_secret = $_SESSION['access_token_secret'];
-		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
+		$connection = $this->connect();
 		$exec = $connection->post('statuses/update', array('status' => $request->input('status')));
 		return response()->json($exec);
 	}
@@ -109,10 +111,7 @@ class HomeController extends Controller
 		$filename = $_FILES['file']['name'];
 		$tmp = $_FILES['file']['tmp_name'];
 		// return $tmp;
-		$access_token = $_SESSION['access_token'];
-		$access_token_secret = $_SESSION['access_token_secret'];
-		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
-		$connection->setTimeouts(10, 15);
+		$connection = $this->connect();
 		$media = $connection->upload('media/upload', array('media' => $tmp));
 
 		// $dest = '../resources/assets/' . $filename;
@@ -121,10 +120,7 @@ class HomeController extends Controller
 		return response()->json($media);
 	}
 	public function postTweetWithMedia(Request $request) {
-		$access_token = $_SESSION['access_token'];
-		$access_token_secret = $_SESSION['access_token_secret'];
-		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
-		$connection->setTimeouts(10, 15);
+		$connection = $this->connect();
 		$parameters = array(
 			'status' => $request->input('status'),
 			'media_ids' => implode(',', $request->input('media')),
@@ -132,13 +128,6 @@ class HomeController extends Controller
 		// return var_dump($parameters);
 		$exec = $connection->post('statuses/update', $parameters);
 		return response()->json($exec);
-	}
-	public function connect() {
-		$access_token = $_SESSION['access_token'];
-		$access_token_secret = $_SESSION['access_token_secret'];
-		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
-		$connection->setTimeouts(10, 15);
-		return $connection;
 	}
 	public function getMentions() {
 		$connection = $this->connect();
