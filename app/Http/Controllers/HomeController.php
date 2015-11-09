@@ -102,7 +102,11 @@ class HomeController extends Controller
 	}
 	public function postTweet(Request $request) {
 		$connection = $this->connect();
-		$exec = $connection->post('statuses/update', array('status' => $request->input('status')));
+		$parameters = array(
+			'status' => $request->input('status'),
+			'in_reply_to_status_id' => $request->input('in_reply_to_status_id'),
+		);
+		$exec = $connection->post('statuses/update', $parameters);
 		return response()->json($exec);
 	}
 	public function postMedia(Request $request) {
@@ -133,6 +137,13 @@ class HomeController extends Controller
 		$connection = $this->connect();
 		$content = $connection->get('statuses/mentions_timeline');
 		return response()->json($content);
+	}
+	public function postMention(Request $request) {
+		$connection = $this->connect();
+		$parameters = array(
+			'status' => $request->input('status'),
+			'in_reply_to_status_id' => $request->input('in_reply_to_status_id'),
+		);
 	}
 
 	/**

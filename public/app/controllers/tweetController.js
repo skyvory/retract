@@ -37,6 +37,7 @@
 					url: 'postTweet',
 					data: {
 						status: newtweet,
+						in_reply_to_status_id: $scope.mention_target_id,
 					}
 				}).then(function successCallback(response) {
 					var xxx = [];
@@ -112,6 +113,12 @@
 					}
 					
 				}
+			}
+
+			$scope.mention_target_id = '';
+			$scope.toMention = function(mention_target_id, screen_name) {
+				$scope.mention_target_id = mention_target_id;
+				$scope.newtweet = '@' + screen_name + ' ';
 			}
 
 			$scope.verifyUser();

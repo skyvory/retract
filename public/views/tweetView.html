@@ -14,7 +14,6 @@ Filter <input type="text" ng-model="searchquery">
 
 <br />
 
-<h3>Timeline</h3>
 <div id="results">
 	<div ng-repeat="t in tweets | filter: searchquery">
 		<img ng-src="{{t.user.profile_image_url}}">
@@ -28,8 +27,9 @@ Filter <input type="text" ng-model="searchquery">
 <div class="mention-area">
 	<div ng-repeat="t in mentions.data | filter: searchquery">
 		<img ng-src="{{t.user.profile_image_url}}">
-		<strong>{{t.user.name}}</strong>
+		<strong>{{t.user.name}} @{{t.user.screen_name}}</strong>
 		<span ng-bind-html="t.text"></span>
+		<button ng-click="toMention(t.id_str, t.user.screen_name)">Reply</button>
 		<br />
 	</div>
 </div>
