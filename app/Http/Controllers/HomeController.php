@@ -102,12 +102,13 @@ class HomeController extends Controller
 		$access_token = $_SESSION['access_token'];
 		$access_token_secret = $_SESSION['access_token_secret'];
 		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
+		$connection->setTimeouts(10, 15);
 		$media = $connection->upload('media/upload', array('media' => $tmp));
 
 		// $dest = '../resources/assets/' . $filename;
 		// move_uploaded_file($tmp, $dest);
 
-		return var_dump($media);
+		return response()->json($media);
 	}
 	public function postTweetWithMedia(Request $request) {
 		$access_token = $_SESSION['access_token'];
