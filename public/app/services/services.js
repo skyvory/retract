@@ -4,6 +4,7 @@ angular.module('retractionApp.services', [])
 
 		return {
 			initialize: function() {
+				// go to oauth.io to set up oauth proxy, put https://oauth.io/auth on twitter app's Callback URL
 				// initialize oauth.io with public key of the application
 				OAuth.initialize('Gc1Ckf0s6GZw56KQS8NWdBglRiw', {
 					cache: true
