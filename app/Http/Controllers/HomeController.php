@@ -13,14 +13,19 @@ use Illuminate\Http\Response;
 
 session_start();
 
-// define('CONSUMER_KEY', 'vi89NrRgmNdryV4jJtkaxgW0m');
-// define('CONSUMER_SECRET', 'vLo9zzpLXSodZls3upKmxRhG6AawNRHqXe18SizCZ28nqxN2oo');
+define('CONSUMER_KEY', 'vi89NrRgmNdryV4jJtkaxgW0m');
+define('CONSUMER_SECRET', 'vLo9zzpLXSodZls3upKmxRhG6AawNRHqXe18SizCZ28nqxN2oo');
 
-define('CONSUMER_KEY', 'F4wpBL8XAbvnWVZduPDCRAC2L');
-define('CONSUMER_SECRET', 'jkY2GogbNBftilsBMc4sjej2xjI0w4xHcKTpXUMqKLdwm3Rjwj');
+// define('CONSUMER_KEY', 'F4wpBL8XAbvnWVZduPDCRAC2L');
+// define('CONSUMER_SECRET', 'jkY2GogbNBftilsBMc4sjej2xjI0w4xHcKTpXUMqKLdwm3Rjwj');
 
 class HomeController extends Controller
 {
+	public function __construct() {
+		$this->beforeFilter(function() {
+			// constructor
+		});
+	}
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -67,6 +72,7 @@ class HomeController extends Controller
 
 		// create TwitterOAuth object with app key/secret and token key/secret from default phase
 		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $request_token['oauth_token'], $request_token['oauth_token_secret']);
+		$connection->setTimeouts(10, 15);
 
 		// request access token from twitter
 		$access_token = $connection->oauth("oauth/access_token", array("oauth_verifier" => $oauth_verifier));
@@ -85,6 +91,7 @@ class HomeController extends Controller
 		$access_token_secret = $_SESSION['access_token_secret'];
 		// create twitteroauth object with access token
 		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
+		$connection->setTimeouts(10, 15);
 		$content = $connection->get('account/verify_credentials');
 		// return view('home', ['user' => $content]);
 		return response()->json(['content' => $content]);
@@ -125,6 +132,18 @@ class HomeController extends Controller
 		// return var_dump($parameters);
 		$exec = $connection->post('statuses/update', $parameters);
 		return response()->json($exec);
+	}
+	public function connect() {
+		$access_token = $_SESSION['access_token'];
+		$access_token_secret = $_SESSION['access_token_secret'];
+		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
+		$connection->setTimeouts(10, 15);
+		return $connection;
+	}
+	public function getMentions() {
+		$connection = $this->connect();
+		$content = $connection->get('statuses/mentions_timeline');
+		return response()->json($content);
 	}
 
 	/**

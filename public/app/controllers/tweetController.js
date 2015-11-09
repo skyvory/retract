@@ -19,6 +19,17 @@
 				}
 			}
 
+			$scope.getMentions = function() {
+				$http({
+					method: 'GET',
+					url: 'mentions'
+				}).then(function successCallback(response) {
+					$scope.mentions = response;
+				}), function errorCallback(response) {
+					//
+				}
+			}
+
 			$scope.tweet = function() {
 				var newtweet = $scope.newtweet;
 				$http({
@@ -104,5 +115,6 @@
 			}
 
 			$scope.verifyUser();
+			$scope.getMentions();
 		});
 })();

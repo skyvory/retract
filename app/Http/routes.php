@@ -23,3 +23,4 @@ Route::post('/postMedia', [
 	'uses' => 'HomeController@postMedia'
 ]);
 Route::post('/postTweetWithMedia', 'HomeController@postTweetWithMedia');
+Route::get('/mentions', 'HomeController@getMentions');
