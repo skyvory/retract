@@ -114,10 +114,13 @@ class HomeController extends Controller
 		$access_token = $_SESSION['access_token'];
 		$access_token_secret = $_SESSION['access_token_secret'];
 		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
-		// $exec = $connection->post('statuses/update', array('status' => $request->input('status')));
-		// return response()->json($exec);
-		$media = $request->input('media');
-		return $media;
+		$parameters = array(
+			'status' => $request->input('status'),
+			'media_ids' => implode(',', $request->input('media')),
+		);
+		// return var_dump($parameters);
+		$exec = $connection->post('statuses/update', $parameters);
+		return response()->json($exec);
 	}
 
 	/**

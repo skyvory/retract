@@ -52,7 +52,6 @@
 					};
 					result.media = resp.data.media_id_string;
 					result.sequence = sequence;
-					console.log(result);
 					if(callback) {
 						callback(result);
 					}
@@ -71,28 +70,32 @@
 			$scope.upload = function(files) {
 				if(files && files.length && files.length <= 4) {
 					var media = [];
-					var greencount = 0;
-					var allgreen = true;
+					var greencount = files.length;
+					var green = 0;
 					for(var i = 0; i < files.length; i++) {
 						$scope.doUpload(files[i], i, function(callresponse) {
-							console.log("CALLBACK", callresponse);
-							// check for files length and fire tweet post if complete
-							// post tweet status with media
-							var newtweet = $scope.newtweet;
-							$http({
-								method: 'POST',
-								url: 'postTweetWithMedia',
-								data: {
-									status: newtweet,
-									media: media,
+							if(callresponse.media) {
+								media[callresponse.sequence] = callresponse.media;
+								green++;
+							}
+							// post tweet status with media if number of successful upload equal total files
+							if(green == files.length) {
+								var newtweet = $scope.newtweet;
+								$http({
+									method: 'POST',
+									url: 'postTweetWithMedia',
+									data: {
+										status: newtweet,
+										media: media,
+									}
+								}).then(function successCallback(response) {
+									var xxx = [];
+									xxx.push(response.data);
+									$scope.tweets = xxx.concat($scope.tweets);
+									$scope.newtweet = '';
+								}), function errorCallback(response) {
+									//
 								}
-							}).then(function successCallback(response) {
-								var xxx = [];
-								xxx.push(response.data);
-								$scope.tweets = xxx.concat($scope.tweets);
-								$scope.newtweet = '';
-							}), function errorCallback(response) {
-								//
 							}
 						});
 					}
