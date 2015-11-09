@@ -124,6 +124,10 @@
 				$scope.mention_target_id = mention_target_id;
 				$scope.newtweet = '@' + screen_name + ' ';
 			}
+			$scope.clearTweet = function() {
+				$scope.newtweet = '';
+				$scope.mention_target_id = '';
+			}
 
 			$scope.verifyUser();
 			$scope.getMentions();
