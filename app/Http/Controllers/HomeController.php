@@ -13,8 +13,11 @@ use Illuminate\Http\Response;
 
 session_start();
 
-define('CONSUMER_KEY', 'vi89NrRgmNdryV4jJtkaxgW0m');
-define('CONSUMER_SECRET', 'vLo9zzpLXSodZls3upKmxRhG6AawNRHqXe18SizCZ28nqxN2oo');
+// define('CONSUMER_KEY', 'vi89NrRgmNdryV4jJtkaxgW0m');
+// define('CONSUMER_SECRET', 'vLo9zzpLXSodZls3upKmxRhG6AawNRHqXe18SizCZ28nqxN2oo');
+
+define('CONSUMER_KEY', 'F4wpBL8XAbvnWVZduPDCRAC2L');
+define('CONSUMER_SECRET', 'jkY2GogbNBftilsBMc4sjej2xjI0w4xHcKTpXUMqKLdwm3Rjwj');
 
 class HomeController extends Controller
 {
@@ -114,6 +117,7 @@ class HomeController extends Controller
 		$access_token = $_SESSION['access_token'];
 		$access_token_secret = $_SESSION['access_token_secret'];
 		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
+		$connection->setTimeouts(10, 15);
 		$parameters = array(
 			'status' => $request->input('status'),
 			'media_ids' => implode(',', $request->input('media')),
