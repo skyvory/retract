@@ -44,6 +44,7 @@
 					xxx.push(response.data);
 					$scope.tweets = xxx.concat($scope.tweets);
 					$scope.newtweet = '';
+					$scope.mention_target_id = '';
 				}), function errorCallback(response) {
 					//
 				}
@@ -93,18 +94,21 @@
 							// post tweet status with media if number of successful upload equal total files
 							if(green == files.length) {
 								var newtweet = $scope.newtweet;
+								var mention_target_id = $scope.mention_target_id;
 								$http({
 									method: 'POST',
 									url: 'postTweetWithMedia',
 									data: {
 										status: newtweet,
 										media: media,
-									}
+										in_reply_to_status_id: mention_target_id
+									},
 								}).then(function successCallback(response) {
 									var xxx = [];
 									xxx.push(response.data);
 									$scope.tweets = xxx.concat($scope.tweets);
 									$scope.newtweet = '';
+									$scope.mention_target_id = '';
 								}), function errorCallback(response) {
 									//
 								}

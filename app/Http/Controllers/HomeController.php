@@ -128,6 +128,7 @@ class HomeController extends Controller
 		$parameters = array(
 			'status' => $request->input('status'),
 			'media_ids' => implode(',', $request->input('media')),
+			'in_reply_to_status_id' => $request->input('in_reply_to_status_id'),
 		);
 		// return var_dump($parameters);
 		$exec = $connection->post('statuses/update', $parameters);
