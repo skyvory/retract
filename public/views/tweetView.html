@@ -4,7 +4,7 @@ Filter <input type="text" ng-model="searchquery">
 {{user.data.content.name}}
 <br />
 Mention to {{mention_target_id}}
-<button ng-click="clearTweet()" style="margin-left:30%">X</button>
+<button ng-click="clearTweet()" style="position:absolute;left:40%">X</button>
 <br />
 <textarea ng-model="newtweet" cols="50" rows="6"></textarea>
 <button ng-click="tweet()">Tweet</button>
@@ -21,6 +21,7 @@ Mention to {{mention_target_id}}
 		<img ng-src="{{t.user.profile_image_url}}">
 		<small>{{t.user.name}}</small>
 		<span ng-bind-html="t.text"></span>
+		<button ng-click="toMention(t.id_str, t.user.screen_name)">Reply</button>
 		<br />
 	</div>
 </div>
