@@ -3,12 +3,12 @@ Filter <input type="text" ng-model="searchquery">
 <br />
 {{user.data.content.name}}
 <br />
-<textarea ng-model="newtweet"></textarea><button ng-click="clearTweet()">X</button>
+Mention to {{mention_target_id}}
+<button ng-click="clearTweet()" style="margin-left:30%">X</button>
+<br />
+<textarea ng-model="newtweet" cols="50" rows="6"></textarea>
 <button ng-click="tweet()">Tweet</button>
 <br/>
-Mention to {{mention_target_id}}
-
-<button ng-file-select ng-model="myFiles" ng-file-change="upload($files)">Upload</button>
 
 <!-- <div class="button" ngf-select="upload($file)">Upload on file select</div> -->
 <input type="file" class="button" ngf-select="upload($files)" multiple accept="image/*" value="upload on file select">
