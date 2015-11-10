@@ -13,7 +13,7 @@
 					method: 'GET',
 					url: 'home'
 				}).then(function successCallback(response) {
-					$scope.user = response;
+					$scope.user = response.data;
 					$scope.getUserTimeline();
 				}), function errorCallback(response) {
 					//
@@ -25,7 +25,7 @@
 					method: 'GET',
 					url: 'mentions'
 				}).then(function successCallback(response) {
-					$scope.mentions = response;
+					$scope.mentions = response.data;
 				}), function errorCallback(response) {
 					//
 				}
@@ -136,7 +136,7 @@
 					method: 'GET',
 					url: 'getUserTimeline'
 				}).then(function successCallback(response) {
-					$scope.usertimeline = response;
+					$scope.usertimeline = response.data;
 				}), function errorCallback(response) {
 					//
 				}
