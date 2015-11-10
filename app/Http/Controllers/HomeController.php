@@ -98,7 +98,7 @@ class HomeController extends Controller
 		$connection = $this->connect();
 		$content = $connection->get('account/verify_credentials');
 		// return view('home', ['user' => $content]);
-		return response()->json(['content' => $content]);
+		return response()->json($content);
 	}
 	public function postTweet(Request $request) {
 		$connection = $this->connect();
