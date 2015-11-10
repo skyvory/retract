@@ -24,6 +24,13 @@ Mention to {{mention_target_id}}
 		<button ng-click="toMention(t.id_str, t.user.screen_name)">Reply</button>
 		<br />
 	</div>
+	<div ng-repeat="t in usertimeline.data | filter: searchquery">
+		<img ng-src="{{t.user.profile_image_url}}">
+		<small>{{t.user.name}}</small>
+		<span ng-bind-html="t.text"></span>
+		<button ng-click="toMention(t.id_str, t.user.screen_name)">Reply</button>
+		<br />
+	</div>
 </div>
 
 <h3>Mention</h3>

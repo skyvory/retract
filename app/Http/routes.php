@@ -24,3 +24,4 @@ Route::post('/postMedia', [
 ]);
 Route::post('/postTweetWithMedia', 'HomeController@postTweetWithMedia');
 Route::get('/mentions', 'HomeController@getMentions');
+Route::get('/getUserTimeline', 'HomeController@getUserTimeline');

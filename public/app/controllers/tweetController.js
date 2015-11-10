@@ -14,6 +14,7 @@
 					url: 'home'
 				}).then(function successCallback(response) {
 					$scope.user = response;
+					$scope.getUserTimeline();
 				}), function errorCallback(response) {
 					//
 				}
@@ -127,6 +128,18 @@
 			$scope.clearTweet = function() {
 				$scope.newtweet = '';
 				$scope.mention_target_id = '';
+			}
+
+			$scope.usertimeline = '';
+			$scope.getUserTimeline = function() {
+				$http({
+					method: 'GET',
+					url: 'getUserTimeline'
+				}).then(function successCallback(response) {
+					$scope.usertimeline = response;
+				}), function errorCallback(response) {
+					//
+				}
 			}
 
 			$scope.verifyUser();

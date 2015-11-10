@@ -13,11 +13,11 @@ use Illuminate\Http\Response;
 
 session_start();
 
-define('CONSUMER_KEY', 'vi89NrRgmNdryV4jJtkaxgW0m');
-define('CONSUMER_SECRET', 'vLo9zzpLXSodZls3upKmxRhG6AawNRHqXe18SizCZ28nqxN2oo');
+// define('CONSUMER_KEY', 'vi89NrRgmNdryV4jJtkaxgW0m');
+// define('CONSUMER_SECRET', 'vLo9zzpLXSodZls3upKmxRhG6AawNRHqXe18SizCZ28nqxN2oo');
 
-// define('CONSUMER_KEY', 'F4wpBL8XAbvnWVZduPDCRAC2L');
-// define('CONSUMER_SECRET', 'jkY2GogbNBftilsBMc4sjej2xjI0w4xHcKTpXUMqKLdwm3Rjwj');
+define('CONSUMER_KEY', 'F4wpBL8XAbvnWVZduPDCRAC2L');
+define('CONSUMER_SECRET', 'jkY2GogbNBftilsBMc4sjej2xjI0w4xHcKTpXUMqKLdwm3Rjwj');
 
 class HomeController extends Controller
 {
@@ -145,6 +145,14 @@ class HomeController extends Controller
 			'status' => $request->input('status'),
 			'in_reply_to_status_id' => $request->input('in_reply_to_status_id'),
 		);
+	}
+	public function getUserTimeline(Request $request) {
+		$connection = $this->connect();
+		$parameters = array(
+			'screen_name' => $request->input('screen_name'),
+		);
+		$content = $connection->get('statuses/user_timeline', $parameters);
+		return response()->json($content);
 	}
 
 	/**
